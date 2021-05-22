@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.example.demo.models.UsuarioModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/usuario")
 public class UsuarioController {
     @Autowired
@@ -24,7 +26,30 @@ public class UsuarioController {
      }
 
      @PostMapping()
-     public ArrayList<UsuarioModel> obtenerPorNumeroDocumento(@RequestBody UsuarioModel usuario){
-        return usuarioService.obtenerPorNumeroDocumento(usuario.getNumeroDocumento(),usuario.getClave());
+     public ArrayList<UsuarioModel> obtenerPorNumeroDocumento(@RequestBody Credenciales credenciales){
+        return usuarioService.obtenerPorNumeroDocumento(credenciales.getUsuario(),credenciales.getClave());
      }
+     
+}
+
+ class Credenciales{
+   private String usuario;
+   private String clave;
+
+   public String getUsuario() {
+      return this.usuario;
+   }
+
+   public void setUsuario(String usuario) {
+      this.usuario = usuario;
+   }
+
+   public String getClave() {
+      return this.clave;
+   }
+
+   public void setClave(String clave) {
+      this.clave = clave;
+   }
+
 }
